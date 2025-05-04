@@ -1,9 +1,9 @@
 import axios from "axios";
-import useAuthStore from "../store/auth";
+import useAuthStore from "../stores/auth";
 
 const api = axios.create({
   baseURL: "http://localhost:8080/api",
-  timeout: 10000,
+  timeout: 1000,
   headers: {
     "Content-Type": "application/json",
     "Accept" : 'aplication/json'
@@ -44,3 +44,5 @@ api.interceptors.response.use(
     return Promise.reject(error);
   }
 );
+
+export default api;
