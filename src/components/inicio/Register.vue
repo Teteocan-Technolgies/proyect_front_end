@@ -13,17 +13,28 @@
 
 <script setup>
 import { ref } from 'vue'
+import { useAuthStore } from '@/stores/auth'
 
 const name =ref('')
 const email =ref('')
 const password =ref('')
 const password2 =ref('')
+const authStore = useAuthStore()
 
 async function register() {
     try {
-        
+        await authStore.register({
+            name: name.value,
+            email: email.value,
+            password: password.value
+        })
     } catch (error) {
-        
+        console.error(error)
+    } finally {
+        name.value = ''
+        email.value = ''
+        password.value = ''
+        password2.value = ''
     }
 }
 </script>

@@ -3,7 +3,7 @@ import router from "@/router";
 import { defineStore } from "pinia";
 
 
-const useAuthStore = defineStore("auth", {
+export const useAuthStore = defineStore("auth", {
     state: () => ({
         user: null,
         token: null,
@@ -84,5 +84,3 @@ const useAuthStore = defineStore("auth", {
         }
     },
 }); 
-
-export default useAuthStore;

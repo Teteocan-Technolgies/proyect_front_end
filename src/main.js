@@ -5,7 +5,7 @@ import router from './router'
 import { createPinia } from 'pinia'
 import App from './App.vue'
 import '@/api/axios'
-import useAuthStore from './stores/auth'
+import { useAuthStore } from './stores/auth'
 
 const pinia = createPinia()
 const app = createApp(App)

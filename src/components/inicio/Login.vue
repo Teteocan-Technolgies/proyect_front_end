@@ -10,16 +10,22 @@
 
 <script setup>
 import { ref } from 'vue';
+import { useAuthStore } from '@/stores/auth';
 
 const correo = ref('');
 const password = ref('');
+const authStore = useAuthStore();
 
 
-async function login(params) {
+async function login() {
     try {
-        const response = await useAuthStore.register(credentials)
+        await authStore.login(correo.value, password.value);
+        console.log('login');
     } catch (error) {
-        
+        console.error(error);
+    } finally {
+        correo.value = '';
+        password.value = '';
     }
 }
 
