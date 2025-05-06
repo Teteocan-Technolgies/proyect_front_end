@@ -18,14 +18,12 @@ export const useAuthStore = defineStore("auth", {
                 };
                 const response = await auth.login(credentials)
 
-                //Guardamos el token en el localStorage
-                //Guardamos el usuario en el localStorage
                 this.user = response.data.user;
-                this.token = response.data.token;
-                localStorage.setItem("token", response.data.token);
+                //this.token = response.data.token;
+                //localStorage.setItem("token", response.data.token);
                 localStorage.setItem("user", response.data.user)
 
-                //router.push("/");
+                router.push("/inicio");
             } catch (error) {
                 console.error(error);
             }
@@ -40,23 +38,26 @@ export const useAuthStore = defineStore("auth", {
             } catch (error) {
                 console.error(error);
             } finally {
-                localStorage.removeItem("token");
+                //localStorage.removeItem("token");
                 localStorage.removeItem("user");
                 this.user = null;
-                this.token = null;
+                //this.token = null;
                 router.push("/login");
             }
         },
 
-        async register(name, correo, password) {
+        async register(name, apellido, correo, password) {
             try {
                 let credentials = {
-                    name: name,
-                    correo: correo,
+                    nombre: name,
+                    apellido: apellido,
+                    email: correo,
                     password: password,
                 };
+                console.log(credentials);
                 //Llamamos a la API para registrar un nuevo usuario
                 const response = await auth.register(credentials)
+                console.log(response.data);
                 if(response.status === 201) {
                     //Si el registro es exitoso, redirigimos al usuario a la página de inicio de sesión
                     router.push("/login");

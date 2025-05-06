@@ -1,7 +1,7 @@
 import { createRouter, createMemoryHistory } from "vue-router";
 
 export const router = createRouter({
-  history: createMemoryHistory(import.meta.env.BASE_URL),
+  history: createMemoryHistory(import.meta.env.BASE_URL || '/'),
   routes: [
     {
       path: "/",
@@ -9,26 +9,38 @@ export const router = createRouter({
       children: [
         {
           path: 'login',
+          name: 'login',
           component: () => import("@/components/inicio/Login.vue")
         },
         {
           path: 'register',
+          name: 'register',
           component: () => import("@/components/inicio/Register.vue")
         },
         {
           path: '',
-          redirect: '/login'
+          redirect: { name : 'login' }
         }
-      ]
+      ],
     },
-  ]
+    {
+        path: "/inicio",
+        name: 'inicio',
+        component: () => import("@/layouts/UsuarioLayout.vue"),
+        children: []
+    },
+    ]
 });
 
 
 router.beforeEach((to, from, next) => {
-  if (to.name === 'inicio' && localStorage.getItem('token') === null) {
+  const user = localStorage.getItem('user');
+
+  if (user && (to.name === 'login' || to.name === 'register')) {
+    next({ name: 'inicio' });
+  } else if(!user && to.name === 'inicio'){
     next({ name: 'login' });
-  } else {
+  }else{
     next();
   }
 });
