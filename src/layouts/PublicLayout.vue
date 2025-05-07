@@ -1,17 +1,17 @@
 <template>
+  <div class="container">
     <header>
-      <nav>
-        <div>
-          <h1>DASHBOARD LOGIN</h1> </div>
-      </nav>
+          <h1>dashboard login</h1>
     </header>
-    <div>
+    <div class="wrapper">
       <RouterView />
+
+      <div class="auth-links">
+        <RouterLink to="/login" class="auth-button">Login</RouterLink>
+        <RouterLink to="/register" class="auth-button">Register</RouterLink>
+      </div>
     </div>
-    <div class="auth-links">
-      <RouterLink to="/login" class="auth-button">Login</RouterLink>
-      <RouterLink to="/register" class="auth-button">Register</RouterLink>
-    </div>
+  </div>
   </template>
   
   <script setup>
@@ -19,6 +19,12 @@
   </script>
   
   <style scoped>
+  .container {
+    min-height: 100vh;
+    display: grid;
+    grid-template-rows: auto 1fr
+  }
+
   header {
     background-color: #f8f9fa;
     padding: 1rem 0;
@@ -32,6 +38,8 @@
   h1 {
     margin: 0;
     color: #343a40;
+    text-transform: uppercase;
+    text-align: center;
   }
   
   .auth-links {
@@ -55,5 +63,10 @@
   .auth-button:hover {
     background-color: #0056b3;
     border-color: #0056b3;
+  }
+
+  .wrapper {
+    display: grid;
+    align-content: center;
   }
   </style>
