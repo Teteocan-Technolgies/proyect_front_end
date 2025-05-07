@@ -40,7 +40,6 @@ const authStore = useAuthStore();
 async function login() {
     try {
         await authStore.login(correo.value, password.value);
-        console.log('login');
     } catch (error) {
         console.error(error);
     } finally {
