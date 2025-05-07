@@ -19,17 +19,28 @@ export const router = createRouter({
         },
         {
           path: '',
-          redirect: { name : 'login' }
+          redirect: { name: 'login' }
         }
       ],
     },
     {
-        path: "/inicio",
-        name: 'inicio',
-        component: () => import("@/layouts/UsuarioLayout.vue"),
-        children: []
+      path: "/inicio",
+      name: 'inicio',
+      component: () => import("@/layouts/UsuarioLayout.vue"),
+      children: [
+        {
+          path: '/inicio/productos',
+          name: 'productos',
+          component: () => import("@/components/productos/allProducts.vue")
+        },
+        {
+          path: '/inicio/ventas',
+          name: 'ventas',
+          component: () => import("@/components/ventas/AllVentas.vue")
+        },
+      ]
     },
-    ]
+  ]
 });
 
 
@@ -38,9 +49,9 @@ router.beforeEach((to, from, next) => {
 
   if (user && (to.name === 'login' || to.name === 'register')) {
     next({ name: 'inicio' });
-  } else if(!user && to.name === 'inicio'){
+  } else if (!user && to.name === 'inicio') {
     next({ name: 'login' });
-  }else{
+  } else {
     next();
   }
 });

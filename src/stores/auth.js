@@ -16,25 +16,32 @@ export const useAuthStore = defineStore("auth", {
                     email: email,
                     password: password,
                 };
-                const response = await auth.login(credentials)
-
-                this.user = response.data.user;
+                const response = await auth.login(credentials);
+                this.setUser(response.data)
                 //this.token = response.data.token;
                 //localStorage.setItem("token", response.data.token);
-                localStorage.setItem("user", response.data.user)
+                // localStorage.setItem("user", response.data.user)
 
                 router.push("/inicio");
             } catch (error) {
                 console.error(error);
             }
         },
+
+        setUser(payload) {
+            this.user = payload
+            localStorage.setItem("user", JSON.stringify(payload))
+        },
+
         async logout() {
             try {
                 let credentials = {
                     token: localStorage.getItem("token"),
                 };
                 //Llamamos a la API para cerrar sesión
-                const response = await auth.logout(credentials)
+                if (credentials.token) {
+                    await auth.logout(credentials)
+                }
             } catch (error) {
                 console.error(error);
             } finally {
@@ -54,14 +61,14 @@ export const useAuthStore = defineStore("auth", {
                     email: correo,
                     password: password,
                 };
-                console.log(credentials);
+                // console.log(credentials);
                 //Llamamos a la API para registrar un nuevo usuario
                 const response = await auth.register(credentials)
-                console.log(response.data);
-                if(response.status === 201) {
+                // console.log(response.data);
+                if (response.status === 201) {
                     //Si el registro es exitoso, redirigimos al usuario a la página de inicio de sesión
                     router.push("/login");
-                }else{
+                } else {
                     //Si el registro no es exitoso, mostramos un error
                     console.error("No se pudo registrar el usuario");
                 }

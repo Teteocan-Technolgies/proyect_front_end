@@ -18,25 +18,25 @@ api.interceptors.request.use((config) => {
     config.headers.Authorization = `Bearer ${authStore.token}`;
   }
   return config;
-}); 
+});
 
 //Interceptor para manejar respuestas exitosas
 api.interceptors.response.use(
-    response => response,
-    error => {
-      if (error.response.status === 401) {
-        const authStore = useAuthStore();
-        authStore.logout();
-        // Redirigir al usuario a la página de inicio de sesión
-      }
-      return Promise.reject(error.response?.dat || error);
+  response => response,
+  error => {
+    if (error.response.status === 401) {
+      const authStore = useAuthStore();
+      authStore.logout();
+      // Redirigir al usuario a la página de inicio de sesión
     }
+    return Promise.reject(error.response?.dat || error);
+  }
 )
 
 //Interceptor para manejar errores
 api.interceptors.response.use(
-  (response) => response,
-  (error) => {
+  response => response,
+  error => {
     if (error.response.status === 401) {
       // Manejar el error de autenticación aquí
       console.error("Error de autenticación:", error.response.data);
