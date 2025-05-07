@@ -16,7 +16,12 @@ export const useAuthStore = defineStore("auth", {
                     email: email,
                     password: password,
                 };
+
+                console.log("credentials")
+                console.log(credentials)
                 const response = await auth.login(credentials);
+                console.log("response")
+                console.log(response)
                 this.setUser(response.data)
                 //this.token = response.data.token;
                 //localStorage.setItem("token", response.data.token);
@@ -24,6 +29,7 @@ export const useAuthStore = defineStore("auth", {
 
                 router.push("/inicio");
             } catch (error) {
+                console.log("Catch error")
                 console.error(error);
             }
         },

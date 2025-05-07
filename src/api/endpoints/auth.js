@@ -2,15 +2,15 @@ import api from "../axios";
 
 export default {
 
-    login(credentials){
+    login(credentials) {
         return api.post('/login', credentials);
     },
 
-    logout(credentials){
+    logout(credentials) {
         return api.post('/logout');
     },
-    
-    register(credentials){
+
+    register(credentials) {
         return api.post('/registrar', credentials);
     }
 }
