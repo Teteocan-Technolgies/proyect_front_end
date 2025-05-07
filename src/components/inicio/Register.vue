@@ -124,6 +124,8 @@ label {
   border-radius: 4px;
   font-size: 1rem;
   box-sizing: border-box; /* Importante para que el padding no aumente el ancho */
+  background-color: #b3b3b3;
+  color: #333333;
 }
 
 .btn-primary {

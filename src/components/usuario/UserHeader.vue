@@ -14,7 +14,7 @@ const logout = () => {
     <header>
         <div class="container">
             <h2>YourStore</h2>
-
+            <!-- {{ identity }} -->
             <div class="user__data">
                 <button class="logout" @click="logout">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -42,6 +42,24 @@ const logout = () => {
     .user__data {
         display: grid;
         grid-template-columns: auto 1fr;
+        align-items: center;
+
+        gap: 0 4px;
+    }
+}
+
+.logout {
+    background-color: transparent;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    aspect-ratio: 1;
+
+    padding: 5px;
+    border: 1px solid #ddd;
+
+    svg {
+        color: rgba(235, 235, 235, 0.64);
     }
 }
 </style>

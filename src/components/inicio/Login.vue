@@ -84,6 +84,8 @@ label {
   border: 1px solid #ccc;
   border-radius: 4px;
   font-size: 1rem;
+  background-color: #b3b3b3;
+  color: #333333;
 }
 
 .btn-primary {
