@@ -1,7 +1,7 @@
 import { defineStore } from "pinia";
 import general from "@/api/endpoints/general";
 import { reactive, toRefs } from "vue";
-export const useUsuariosStore = defineStore('usurios', () => {
+export const useUsuariosStore = defineStore('usuarios', () => {
     const state = reactive({
         data: null,
         added: null,
