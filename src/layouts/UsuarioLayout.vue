@@ -27,5 +27,9 @@ import UserSidemenu from '@/components/usuario/UserSidemenu.vue';
   .aside {
     grid-area: aside;
   }
+
+  .content {
+    padding: 0 0 40px;
+  }
 }
 </style>

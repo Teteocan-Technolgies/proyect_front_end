@@ -10,6 +10,10 @@ const buttons = reactive([
         'title': 'Ventas',
         'link': '/inicio/ventas',
     },
+    {
+        'title': 'Usuarios',
+        'link': '/inicio/usuarios',
+    },
 ])
 </script>
 <template>

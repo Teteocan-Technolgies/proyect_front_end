@@ -38,6 +38,11 @@ export const router = createRouter({
           name: 'ventas',
           component: () => import("@/components/ventas/AllVentas.vue")
         },
+        {
+          path: '/inicio/usuarios',
+          name: 'Usuarios',
+          component: () => import("@/components/usuario/AllUsers.vue")
+        },
       ]
     },
   ]

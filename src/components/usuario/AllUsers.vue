@@ -1,18 +1,18 @@
 <script setup>
 import { reactive, onMounted, computed, ref, watch } from 'vue';
-import { useProductsStore } from '@/stores/products';
-import ModalGen from './ModalGen.vue';
+import { useUsuariosStore } from '@/stores/usuarios';
 
-const headers = reactive(['nombre', 'descripcion', 'precio', 'stock']);
+const headers = reactive(['Nombre', 'Apellido', 'Correo']);
+
 const paginadorData = reactive({
     currentPage: 1,
     totalPages: undefined,
     itemsPerPage: 15,
 })
 
-const products = useProductsStore();
-const productsData = computed(() => {
-    const data = products.data;
+const usuarios = useUsuariosStore();
+const usuariosData = computed(() => {
+    const data = usuarios.data;
     if(!data) return
     paginadorData.totalPages = Math.ceil(data.length / paginadorData.itemsPerPage);
 
@@ -20,7 +20,7 @@ const productsData = computed(() => {
     const end = start + paginadorData.itemsPerPage;
 
     return data.slice(start, end);
-});
+})
 
 watch(() => paginadorData.currentPage,
 (newVal) => {
@@ -31,36 +31,17 @@ watch(() => paginadorData.currentPage,
     }
 })
 
-const modalGenFather = ref(null);
-
 const paginatorState = (toRight) => {
     paginadorData.currentPage = toRight ?
         Math.min(paginadorData.totalPages, ++paginadorData.currentPage) :
         Math.max(1, --paginadorData.currentPage)
 }
 
-const openModal = () => {
-    modalGenFather.value.openModal();
-}
+let identity = localStorage.getItem('user');
+identity = identity ? JSON.parse(identity) : null;
 
 const getInfo = async () => {
-    await products.getAllInfoPrd('productos');
-}
-
-const toAdded = (item) => {
-    products.setAdded(item)
-    openModal();
-}
-
-const deleteItem = async (id) => {
-    try {
-        const response = await products.deleteItemPrd({ 'option': 'productos', id })
-        if (response.message !== 'Producto dado de baja') throw { message: 'Error al eliminar producto' };
-        getInfo();
-
-    } catch (error) {
-        console.log(message)
-    }
+    await usuarios.getAllInfoUsr('usuarios');
 }
 
 onMounted(async () => {
@@ -69,44 +50,25 @@ onMounted(async () => {
 
 </script>
 <template>
-    <div class="container-all-products">
-        <ModalGen ref="modalGenFather" @allFine="getInfo" />
-        <h2>Todos los productos:</h2>
-        <button @click="openModal">Crear producto</button>
+    <div class="container-all-sails">
+        <h2>Todos los usuarios:</h2>
         <div class="table">
             <div class="table-heads">
-                <div v-for="(head, index) in headers" :key="index" :class="{ 'centered': index > 1 }">
+                <div v-for="(head, index) in headers" :key="index">
                     <p>{{ head }}</p>
                 </div>
             </div>
             <div class="table-data">
-                <div class="table-row" v-for="(item, index) in productsData" :key="index">
+                <div class="table-row" v-for="(item, index) in usuariosData" :key="index">
                     <div>
                         <p>{{ item.nombre }}</p>
                     </div>
                     <div>
-                        <p>{{ item.descripcion }}</p>
+                        <p>{{ item.apellido }}</p>
                     </div>
-                    <div class="centered">
-                        <p>${{ item.precio }}</p>
+                    <div>
+                        <p>{{ item.email }}</p>
                     </div>
-                    <div class="centered">
-                        <p>{{ item.stock }}</p>
-                    </div>
-                    <button class="edit" @click="toAdded(item)">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-linecap="round" stroke-linejoin="round" width="24" height="24" stroke-width="2">
-                            <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4"></path>
-                            <path d="M13.5 6.5l4 4"></path>
-                        </svg>
-                    </button>
-                    <button class="delete" @click="deleteItem(item.producto_id)">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-linecap="round" stroke-linejoin="round" width="24" height="24" stroke-width="2">
-                            <path d="M10 8l4 8"></path>
-                            <path d="M10 16l4 -8"></path>
-                        </svg>
-                    </button>
                 </div>
             </div>
 
@@ -142,14 +104,13 @@ onMounted(async () => {
 .table {
     display: grid;
     width: fit-content;
-
     gap: 2px;
 
     &-heads {
         display: grid;
         text-transform: capitalize;
 
-        grid-template-columns: 300px 600px 100px 100px 50px 50px;
+        grid-template-columns: 200px 300px 300px;
         gap: 2px;
     }
 
@@ -160,7 +121,7 @@ onMounted(async () => {
 
     &-row {
         display: grid;
-        grid-template-columns: 300px 600px 100px 100px 50px 50px;
+        grid-template-columns: 200px 300px 300px;
         gap: 2px;
 
         >div {
@@ -201,9 +162,5 @@ onMounted(async () => {
         background-color: transparent;
         border: none;
     }
-}
-
-.centered {
-    text-align: center;
 }
 </style>

@@ -1,23 +1,43 @@
 <script setup>
 import { ref, defineExpose, reactive, computed, watch } from 'vue';
 import { useVentasStore } from '@/stores/ventas';
+import { useUsuariosStore } from '@/stores/usuarios';
 
 const ModalGenVenta = ref(null);
 
 // Emitir eventos
 const emit = defineEmits(['allFine']);
 
+const buscador = ref(null);
+const userSelected = ref({
+    nombre: null,
+    apellido: null,
+    email: null,
+    usuario_id: null
+});
+
 // Store y estado reactivo
 const ventas = useVentasStore();
 const ventasAdded = computed(() => ventas.added);
 
-let identity = localStorage.getItem('user');
-identity = identity ? JSON.parse(identity) : null;
+const usuarios = useUsuariosStore();
+const usuariosData = computed(() => usuarios.data);
+
+const usuariosDataBuscador = computed(() => {
+    const searchValue = buscador.value?.toLowerCase().trim();
+    if (!searchValue) return [];
+
+    return usuariosData.value.filter(item =>
+        item.nombre?.toLowerCase().includes(searchValue) ||
+        item.apellido?.toLowerCase().includes(searchValue) ||
+        item.email?.toLowerCase().includes(searchValue)
+    ).slice(0, 5);
+})
 
 
 const dataToSend = reactive({
     venta_id: null,
-    usuario_id: identity.usuario_id,
+    usuario_id: null,
     fecha: null,
     total: null,
     cantidad_art: null,
@@ -26,6 +46,8 @@ const dataToSend = reactive({
 // Rellenar el formulario automáticamente si hay un producto seleccionado
 watch(ventasAdded, (newProduct) => {
     if (newProduct) {
+        const selectedUser = usuariosData.value.find(item => item.usuario_id === newProduct.usuario_id);
+        Object.assign(userSelected.value, selectedUser || {});
         dataToSend.venta_id = newProduct.venta_id;
         dataToSend.usuario_id = newProduct.usuario_id;
         dataToSend.fecha = newProduct.fecha;
@@ -57,6 +79,15 @@ const closeModal = () => {
 
 // Resetea los datos del formulario
 const resetForm = () => {
+    buscador.value = null;
+
+    Object.assign(userSelected.value, {
+        nombre: null,
+        apellido: null,
+        email: null,
+        usuario_id: null
+    });
+
     dataToSend.venta_id = null;
     dataToSend.usuario_id = null;
     dataToSend.fecha = null;
@@ -90,7 +121,8 @@ const submitData = async () => {
 
         const option = item.venta_id ? `ventas/${item.venta_id}` : 'ventas'
         const response = await ventas[ruta]({ option, item });
-        if (!response.success) {
+
+        if (response.success) {
             emit('allFine');
             closeModal(); // Cerrar el modal automáticamente si todo está bien
         } else {
@@ -111,6 +143,24 @@ defineExpose({
 <template>
     <dialog ref="ModalGenVenta">
         <div class="container-modal">
+            <div>
+                <label for="searcher">Buscador</label>
+                <input type="text" v-model="buscador" id="searcher" placeholder="Buscar por nombre, correo o apellido">
+                <div class="height-ancor">
+                    <div class="button-list" :class="{ 'active': buscador && buscador.length > 0 }">
+                        <div>
+                            <button v-for="(item, index) in usuariosDataBuscador" :key="index" @click="buscador = null,
+                                userSelected = item,
+                                dataToSend.usuario_id = item.usuario_id">{{
+                                    item.nombre }} {{
+                                    item.apellido
+                                }}</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h4>Usuario seleccionado: {{ userSelected.nombre }} {{ userSelected.apellido }}</h4>
             <div>
                 <label for="number">Total</label>
                 <input type="number" id="number" v-model="dataToSend.total">
@@ -143,5 +193,26 @@ dialog {
 
 textarea {
     resize: none;
+}
+
+.height-ancor {
+    height: 15px;
+}
+
+.button-list {
+    display: grid;
+    grid-template-rows: 0fr;
+    overflow: hidden;
+
+    transition: grid-template-rows 0.3s ease;
+
+    div {
+        display: grid;
+        z-index: 3;
+    }
+}
+
+.button-list.active {
+    grid-template-rows: 1fr;
 }
 </style>

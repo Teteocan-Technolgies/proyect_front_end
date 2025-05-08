@@ -1,7 +1,7 @@
 import { defineStore } from "pinia";
 import general from "@/api/endpoints/general";
 import { reactive, toRefs } from "vue";
-export const useVentasStore = defineStore('ventas', () => {
+export const useUsuariosStore = defineStore('usurios', () => {
     const state = reactive({
         data: null,
         added: null,
@@ -15,7 +15,7 @@ export const useVentasStore = defineStore('ventas', () => {
         state.added = item
     }
 
-    const getAllInfoVnt = async (item) => {
+    const getAllInfoUsr = async (item) => {
         try {
             const response = await general.getAllInfo(item);
             if (!response.data.success) throw response;
@@ -31,7 +31,7 @@ export const useVentasStore = defineStore('ventas', () => {
         }
     }
 
-    const getInfoByIdVnt = async (item) => {
+    const getInfoByIdUsr = async (item) => {
         try {
             const response = await general.getInfoById(item);
             if (!response.data) throw response;
@@ -47,7 +47,7 @@ export const useVentasStore = defineStore('ventas', () => {
         }
     }
 
-    const addItemVnt = async (item) => {
+    const addItemUsr = async (item) => {
         try {
             const response = await general.addItem(item);
             if (!response.data) throw response;
@@ -62,11 +62,12 @@ export const useVentasStore = defineStore('ventas', () => {
         }
     }
 
-    const editItemVnt = async (item) => {
+    const editItemUsr = async (item) => {
         try {
             const response = await general.editItem(item);
-            if (!response.data.success) throw response;
+            if (!response.data) throw response;
             return response.data;
+
         } catch (error) {
             return {
                 success: false,
@@ -76,7 +77,7 @@ export const useVentasStore = defineStore('ventas', () => {
         }
     }
 
-    const deleteItemVnt = async (item) => {
+    const deleteItemUsr = async (item) => {
         try {
             const response = await general.deleteItem(item);
             if (!response.data) throw response;
@@ -91,6 +92,6 @@ export const useVentasStore = defineStore('ventas', () => {
         }
     }
 
-    return { ...toRefs(state), setData, setAdded, getAllInfoVnt, getInfoByIdVnt, addItemVnt, editItemVnt, deleteItemVnt }
+    return { ...toRefs(state), setData, setAdded, getAllInfoUsr, getInfoByIdUsr, addItemUsr, editItemUsr, deleteItemUsr }
 })
 
