@@ -133,7 +133,7 @@ dialog {
 }
 
 .container-modal {
-    min-width: 300px;
+    min-width: 18.75rem;
 
     >div {
         display: grid;

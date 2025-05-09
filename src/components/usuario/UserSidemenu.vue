@@ -26,10 +26,6 @@ aside {
     display: grid;
     grid-auto-rows: max-content;
 
-    padding: 4px 12px;
-
-    a {
-
-    }
+    padding: .25rem .75rem;
 }
 </style>

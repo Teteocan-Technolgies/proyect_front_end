@@ -143,25 +143,25 @@ onMounted(async () => {
     display: grid;
     width: fit-content;
 
-    gap: 2px;
+    gap: .125rem;
 
     &-heads {
         display: grid;
         text-transform: capitalize;
 
-        grid-template-columns: 300px 600px 100px 100px 50px 50px;
-        gap: 2px;
+        grid-template-columns: 18.75rem 37.5rem 6.25rem 6.25rem 3.125rem 3.125rem;
+        gap: .125rem;
     }
 
     &-data {
         display: grid;
-        gap: 2px;
+        gap: .125rem;
     }
 
     &-row {
         display: grid;
-        grid-template-columns: 300px 600px 100px 100px 50px 50px;
-        gap: 2px;
+        grid-template-columns: 18.75rem 37.5rem 6.25rem 6.25rem 3.125rem 3.125rem;
+        gap: .125rem;
 
         >div {
             display: -webkit-box;
@@ -187,11 +187,11 @@ onMounted(async () => {
         align-items: center;
         justify-content: center;
 
-        gap: 0 8px;
+        gap: 0 .5rem;
     }
 
     input {
-        width: 102px;
+        width: 6.375rem;
     }
 
     button {

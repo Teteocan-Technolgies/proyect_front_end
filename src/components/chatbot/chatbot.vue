@@ -56,18 +56,23 @@ const submitData = async () => {
     position: fixed;
     background-color: #181818;
 
-    inset: auto 30px 30px auto;
-    max-height: 300px;
-    padding: 5px;
+    inset: auto 1.875rem 1.875rem auto;
+    padding: .3125rem;
+    overflow: hidden;
+    max-height: 4.375rem;
+
+    &:has(.active) {
+        max-height: 18.75rem;
+    }
 
     &-view {
         transform: scale(0);
         transition: transform 0.3s ease;
         transform-origin: bottom left;
 
-        border: 1px solid #ddd;
-        border-radius: 3px;
-        padding: 5px;
+        border: .0625rem solid #ddd;
+        border-radius: .1875rem;
+        padding: .3125rem;
 
         &.active {
             transform: scale(1);
@@ -76,21 +81,28 @@ const submitData = async () => {
 }
 
 .pantalla {
-    max-height: 230px;
-    overflow: auto;
     display: grid;
+    overflow: hidden;
     grid-auto-rows: max-content;
-    gap: 5px;
+
+    max-height: 0rem;
+    gap: .3125rem;
+}
+
+.active .pantalla {
+    overflow: auto;
+
+    max-height: 14.375rem;
 }
 
 .message {
     width: fit-content;
     margin-right: auto;
 
-    max-width: 200px;
-    padding: 5px;
+    max-width: 12.5rem;
+    padding: .3125rem;
     background-color: darkcyan;
-    border-radius: 10px;
+    border-radius: .625rem;
 
     &.toRight {
         margin-right: 0;
@@ -98,18 +110,22 @@ const submitData = async () => {
     }
 }
 
+.buttons-contenedor {
+    width: fit-content;
+}
+
 .gen-answer {
     display: flex;
     align-items: center;
-    gap: 5px;
+    gap: .3125rem;
 
     div {
         background-color: #ddd;
         border-radius: 100%;
         animation: flying 800ms ease-in-out var(--Delay, 0s) infinite;
 
-        width: 3px;
-        height: 3px;
+        width: .1875rem;
+        height: .1875rem;
     }
 }
 
@@ -117,11 +133,11 @@ const submitData = async () => {
 
     0%,
     100% {
-        transform: translateY(0px);
+        transform: translateY(0rem);
     }
 
     50% {
-        transform: translateY(-8px);
+        transform: translateY(-0.5rem);
     }
 }
 </style>

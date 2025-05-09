@@ -21,7 +21,7 @@ import chatbot from '@/components/chatbot/chatbot.vue';
     "header header"
     "aside content";
 
-  grid-template-columns: 190px 1fr;
+  grid-template-columns: 11.875rem 1fr;
 
   .header {
     grid-area: header;
@@ -32,7 +32,7 @@ import chatbot from '@/components/chatbot/chatbot.vue';
   }
 
   .content {
-    padding: 0 0 40px;
+    padding: 0 0 12.5rem;
   }
 }
 </style>

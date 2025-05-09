@@ -28,7 +28,7 @@
   header {
     background-color: #f8f9fa;
     padding: 1rem 0;
-    border-bottom: 1px solid #dee2e6;
+    border-bottom: .0625rem solid #dee2e6;
   }
   
   nav div {
@@ -57,7 +57,7 @@
     text-decoration: none;
     border-radius: 0.25rem;
     transition: background-color 0.3s ease;
-    border: 1px solid transparent;
+    border: .0625rem solid transparent;
   }
   
   .auth-button:hover {

@@ -37,14 +37,14 @@ const logout = () => {
     justify-content: space-between;
     align-items: center;
 
-    padding: 15px 35px;
+    padding: .9375rem 2.1875rem;
 
     .user__data {
         display: grid;
         grid-template-columns: auto 1fr;
         align-items: center;
 
-        gap: 0 4px;
+        gap: 0 .25rem;
     }
 }
 
@@ -55,8 +55,8 @@ const logout = () => {
     place-items: center;
     aspect-ratio: 1;
 
-    padding: 5px;
-    border: 1px solid #ddd;
+    padding: .3125rem;
+    border: .0625rem solid #ddd;
 
     svg {
         color: rgba(235, 235, 235, 0.64);
