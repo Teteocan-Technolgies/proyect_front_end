@@ -139,82 +139,97 @@ defineExpose({
 });
 
 </script>
-
+<!-- UserSearch.vue -->
 <template>
-    <dialog ref="ModalGenVenta">
-        <div class="container-modal">
-            <div>
-                <label for="searcher">Buscador de usuarios</label>
-                <input type="text" v-model="buscador" id="searcher" placeholder="Buscar por nombre, correo o apellido">
-                <div class="height-ancor">
-                    <div class="button-list" :class="{ 'active': buscador && buscador.length > 0 }">
-                        <div>
-                            <button v-for="(item, index) in usuariosDataBuscador" :key="index" @click="buscador = null,
-                                userSelected = item,
-                                dataToSend.usuario_id = item.usuario_id">{{
-                                    item.nombre }} {{
-                                    item.apellido
-                                }}</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+  <div class="user-search-container">
+    <label for="searcher" class="search-label">Buscador de usuarios</label>
+    <input
+      type="text"
+      v-model="buscador"
+      id="searcher"
+      placeholder="Buscar por nombre, correo o apellido"
+      class="search-input"
+    />
 
-            <h4>Usuario seleccionado: {{ userSelected.nombre }} {{ userSelected.apellido }}</h4>
-            <div>
-                <label for="fecha">Fecha</label>
-                <input type="date" id="fecha" v-model="dataToSend.fecha">
-            </div>
-
-            <div>
-                <label for="number">Total</label>
-                <input type="number" id="number" v-model="dataToSend.total">
-            </div>
-
-            <div>
-                <label for="stock">Cantidad</label>
-                <input type="number" id="stock" v-model="dataToSend.cantidad_art">
-            </div>
-
-            <button @click="submitData">Guardar</button>
+    <div class="height-ancor">
+      <div class="button-list" :class="{ 'active': buscador && buscador.length > 0 }">
+        <div>
+          <button
+            v-for="(item, index) in resultados"
+            :key="index"
+            @click="selectUser(item)"
+            class="user-button"
+          >
+            {{ item.nombre }} {{ item.apellido }}
+          </button>
         </div>
-    </dialog>
+      </div>
+    </div>
+  </div>
 </template>
-<style scoped lang="scss">
-dialog {
-    margin: auto;
+<style scoped>
+.user-search-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  max-width: 400px;
+  margin: auto;
+  padding: 1rem;
 }
 
-.container-modal {
-    min-width: 18.75rem;
-
-    >div {
-        display: grid;
-    }
+.search-label {
+  font-weight: bold;
+  font-size: 0.95rem;
+  color: #333;
 }
 
-textarea {
-    resize: none;
+.search-input {
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  transition: border-color 0.3s;
+}
+
+.search-input:focus {
+  border-color: #007BFF;
+  outline: none;
 }
 
 .height-ancor {
-    height: .9375rem;
+  height: 0.9375rem;
 }
 
 .button-list {
-    display: grid;
-    grid-template-rows: 0fr;
-    overflow: hidden;
+  display: grid;
+  grid-template-rows: 0fr;
+  overflow: hidden;
+  transition: grid-template-rows 0.3s ease;
+}
 
-    transition: grid-template-rows 0.3s ease;
-
-    div {
-        display: grid;
-        z-index: 3;
-    }
+.button-list div {
+  display: grid;
+  gap: 0.5rem;
+  padding-top: 0.5rem;
 }
 
 .button-list.active {
-    grid-template-rows: 1fr;
+  grid-template-rows: 1fr;
+}
+
+.user-button {
+  padding: 0.5rem 1rem;
+  background-color: #f0f0f0;
+  border: 1px solid #ddd;
+  border-radius: 0.4rem;
+  text-align: left;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.user-button:hover {
+  background-color: #e0e0e0;
 }
 </style>

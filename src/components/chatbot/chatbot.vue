@@ -53,91 +53,139 @@ const submitData = async () => {
 </template>
 <style scoped lang="scss">
 .chat-bot {
-    position: fixed;
-    background-color: #181818;
+  position: fixed;
+  background-color: #2c2c2c;
+  border-radius: 1rem;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+  inset: auto 2rem 2rem auto;
+  padding: 0.5rem;
+  overflow: hidden;
+  max-height: 4.5rem;
+  transition: max-height 0.4s ease;
 
-    inset: auto 1.875rem 1.875rem auto;
-    padding: .3125rem;
-    overflow: hidden;
-    max-height: 4.375rem;
+  &:has(.active) {
+    max-height: 22rem;
+  }
 
-    &:has(.active) {
-        max-height: 18.75rem;
+  &-view {
+    transform: scale(0);
+    transition: transform 0.3s ease;
+    transform-origin: bottom left;
+    border: 1px solid #444;
+    border-radius: 0.75rem;
+    padding: 0.5rem;
+    background-color: #1f1f1f;
+
+    &.active {
+      transform: scale(1);
     }
-
-    &-view {
-        transform: scale(0);
-        transition: transform 0.3s ease;
-        transform-origin: bottom left;
-
-        border: .0625rem solid #ddd;
-        border-radius: .1875rem;
-        padding: .3125rem;
-
-        &.active {
-            transform: scale(1);
-        }
-    }
+  }
 }
 
 .pantalla {
-    display: grid;
-    overflow: hidden;
-    grid-auto-rows: max-content;
-
-    max-height: 0rem;
-    gap: .3125rem;
+  display: grid;
+  overflow: hidden;
+  grid-auto-rows: max-content;
+  max-height: 0rem;
+  gap: 0.5rem;
+  padding: 0.25rem;
+  scroll-behavior: smooth;
+  font-size: 0.875rem;
+  color: #fff;
 }
 
 .active .pantalla {
-    overflow: auto;
-
-    max-height: 14.375rem;
+  overflow-y: auto;
+  max-height: 14rem;
 }
 
 .message {
-    width: fit-content;
-    margin-right: auto;
+  width: fit-content;
+  margin-right: auto;
+  max-width: 80%;
+  padding: 0.5rem 0.75rem;
+  background-color: #008b8b;
+  border-radius: 1rem 1rem 1rem 0.25rem;
+  color: #fff;
+  line-height: 1.4;
 
-    max-width: 12.5rem;
-    padding: .3125rem;
-    background-color: darkcyan;
-    border-radius: .625rem;
+  &.toRight {
+    margin-left: auto;
+    margin-right: 0;
+    background-color: #4caf50;
+    border-radius: 1rem 1rem 0.25rem 1rem;
+  }
+}
 
-    &.toRight {
-        margin-right: 0;
-        margin-left: auto;
+.mensaje {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+
+  input {
+    flex: 1;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    border: none;
+    background-color: #2e2e2e;
+    color: #fff;
+  }
+
+  button {
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    border: none;
+    background-color: #2196f3;
+    color: white;
+    cursor: pointer;
+
+    &:hover {
+      background-color: #1976d2;
     }
+  }
 }
 
 .buttons-contenedor {
-    width: fit-content;
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+
+  button {
+    background-color: #555;
+    color: white;
+    padding: 0.4rem 0.75rem;
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+
+    &:hover {
+      background-color: #777;
+    }
+  }
 }
 
 .gen-answer {
-    display: flex;
-    align-items: center;
-    gap: .3125rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #ccc;
+  font-style: italic;
 
-    div {
-        background-color: #ddd;
-        border-radius: 100%;
-        animation: flying 800ms ease-in-out var(--Delay, 0s) infinite;
-
-        width: .1875rem;
-        height: .1875rem;
-    }
+  div {
+    background-color: #aaa;
+    border-radius: 50%;
+    animation: flying 800ms ease-in-out var(--Delay, 0s) infinite;
+    width: 0.375rem;
+    height: 0.375rem;
+  }
 }
 
 @keyframes flying {
-
-    0%,
-    100% {
-        transform: translateY(0rem);
-    }
-
-    50% {
-        transform: translateY(-0.5rem);
-    }
+  0%, 100% {
+    transform: translateY(0rem);
+  }
+  50% {
+    transform: translateY(-0.4rem);
+  }
 }
 </style>

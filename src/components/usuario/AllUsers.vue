@@ -101,66 +101,111 @@ onMounted(async () => {
     </div>
 </template>
 <style scoped lang="scss">
-.table {
+.container-all-sails {
+  padding: 1rem 2rem;
+  background-color: #181818;
+  border-radius: 1rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+
+  h2 {
+    color: #fff;
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+  }
+
+  .table {
     display: grid;
-    width: fit-content;
-    gap: .125rem;
-
+    width: 100%;
+    gap: 0.5rem;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    background-color: #222;
+    
     &-heads {
-        display: grid;
-        text-transform: capitalize;
+      display: grid;
+      grid-template-columns: 12.5rem 18.75rem 18.75rem;
+      gap: 0.5rem;
+      padding: 0.75rem;
+      background-color: #333;
+      color: #ddd;
+      text-transform: capitalize;
 
-        grid-template-columns: 12.5rem 18.75rem 18.75rem;
-        gap: .125rem;
+      div {
+        font-weight: bold;
+      }
     }
 
     &-data {
-        display: grid;
-        gap: .125rem;
+      display: grid;
+      gap: 0.5rem;
+      padding: 0.75rem;
     }
 
     &-row {
-        display: grid;
-        grid-template-columns: 12.5rem 18.75rem 18.75rem;
-        gap: .125rem;
+      display: grid;
+      grid-template-columns: 12.5rem 18.75rem 18.75rem;
+      gap: 0.5rem;
+      padding: 0.75rem;
+      background-color: #444;
+      border-radius: 0.375rem;
+      transition: background-color 0.3s ease;
 
-        >div {
-            display: -webkit-box;
-            -webkit-box-orient: vertical;
-            -webkit-line-clamp: 1;
-            overflow: hidden;
-        }
+      &:hover {
+        background-color: #555;
+      }
 
-        button {
-            display: grid;
-            place-items: center;
-        }
+      div {
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
     }
-}
+  }
 
-.paginator {
+  .paginator {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    margin-top: 1rem;
 
     &-controls {
-        display: flex;
-        align-items: center;
-        justify-content: center;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
 
-        gap: 0 .5rem;
+      button {
+        background-color: transparent;
+        border: none;
+        color: #ddd;
+        padding: 0.5rem;
+        cursor: pointer;
+        transition: color 0.3s ease;
+
+        &:hover {
+          color: #fff;
+        }
+      }
+
+      svg {
+        width: 1.5rem;
+        height: 1.5rem;
+        color: #ddd;
+        transition: color 0.3s ease;
+
+        &:hover {
+          color: #fff;
+        }
+      }
     }
 
     input {
-        width: 6.375rem;
+      width: 6.375rem;
+      padding: 0.5rem;
+      background-color: #333;
+      color: #ddd;
+      border: none;
+      border-radius: 0.375rem;
     }
-
-    button {
-        padding: 0;
-        display: grid;
-        place-items: center;
-        background-color: transparent;
-        border: none;
-    }
+  }
 }
 </style>

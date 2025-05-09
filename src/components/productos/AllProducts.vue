@@ -142,37 +142,81 @@ onMounted(async () => {
 .table {
     display: grid;
     width: fit-content;
-
-    gap: .125rem;
+    gap: .25rem;
 
     &-heads {
         display: grid;
         text-transform: capitalize;
-
+        font-weight: bold;
+        background-color: #f3f4f6;
+        padding: 0.5rem 0;
+        border-radius: 0.5rem;
         grid-template-columns: 18.75rem 37.5rem 6.25rem 6.25rem 3.125rem 3.125rem;
-        gap: .125rem;
+        gap: .25rem;
+
+        p {
+            margin: 0;
+            padding: 0.25rem 0.5rem;
+        }
     }
 
     &-data {
         display: grid;
-        gap: .125rem;
+        gap: .25rem;
     }
 
     &-row {
         display: grid;
+        align-items: center;
+        background-color: #ffffff;
+        box-shadow: 0 0 4px rgba(0, 0, 0, 0.05);
+        border-radius: 0.5rem;
+        padding: 0.5rem 0;
         grid-template-columns: 18.75rem 37.5rem 6.25rem 6.25rem 3.125rem 3.125rem;
-        gap: .125rem;
+        gap: .25rem;
 
         >div {
             display: -webkit-box;
             -webkit-box-orient: vertical;
             -webkit-line-clamp: 1;
             overflow: hidden;
+            padding: 0 0.5rem;
+            font-size: 0.95rem;
         }
 
         button {
             display: grid;
             place-items: center;
+            background-color: #e5e7eb;
+            border: none;
+            border-radius: 0.5rem;
+            padding: 0.25rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+
+            &:hover {
+                background-color: #d1d5db;
+            }
+
+            svg {
+                stroke: #374151;
+            }
+        }
+
+        .edit {
+            background-color: #c7d2fe;
+
+            &:hover {
+                background-color: #a5b4fc;
+            }
+        }
+
+        .delete {
+            background-color: #fecaca;
+
+            &:hover {
+                background-color: #fca5a5;
+            }
         }
     }
 }
@@ -181,29 +225,40 @@ onMounted(async () => {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    margin-top: 1rem;
 
     &-controls {
         display: flex;
         align-items: center;
         justify-content: center;
+        gap: 0.5rem;
 
-        gap: 0 .5rem;
+        button {
+            background-color: #f3f4f6;
+            border: none;
+            border-radius: 0.5rem;
+            padding: 0.25rem;
+            display: grid;
+            place-items: center;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+
+            &:hover {
+                background-color: #e5e7eb;
+            }
+        }
     }
 
     input {
         width: 6.375rem;
-    }
-
-    button {
-        padding: 0;
-        display: grid;
-        place-items: center;
-        background-color: transparent;
-        border: none;
+        padding: 0.25rem;
+        border: 1px solid #d1d5db;
+        border-radius: 0.5rem;
     }
 }
 
 .centered {
     text-align: center;
 }
+
 </style>

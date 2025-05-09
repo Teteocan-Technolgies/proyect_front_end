@@ -33,33 +33,54 @@ const logout = () => {
 </template>
 <style scoped lang="scss">
 .container {
-    display: flex;
-    justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #1f1f1f;
+  padding: 1rem 2rem;
+  border-bottom: 1px solid #333;
+  color: #fff;
+
+  .user__data {
+    display: grid;
+    grid-template-columns: auto 1fr;
     align-items: center;
+    gap: 0 0.5rem;
 
-    padding: .9375rem 2.1875rem;
-
-    .user__data {
-        display: grid;
-        grid-template-columns: auto 1fr;
-        align-items: center;
-
-        gap: 0 .25rem;
+    img {
+      width: 2rem;
+      height: 2rem;
+      border-radius: 50%;
+      object-fit: cover;
     }
+
+    span {
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: #eee;
+    }
+  }
 }
 
 .logout {
-    background-color: transparent;
-    border-radius: 50%;
-    display: grid;
-    place-items: center;
-    aspect-ratio: 1;
+  background-color: #2e2e2e;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  aspect-ratio: 1;
+  padding: 0.5rem;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
 
-    padding: .3125rem;
-    border: .0625rem solid #ddd;
+  svg {
+    color: #ccc;
+    width: 1rem;
+    height: 1rem;
+  }
 
-    svg {
-        color: rgba(235, 235, 235, 0.64);
-    }
+  &:hover {
+    background-color: #444;
+  }
 }
 </style>

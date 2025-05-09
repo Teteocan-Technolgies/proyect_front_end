@@ -82,66 +82,74 @@ async function register() {
     }
 }
 </script>
-<style scoped>
+<style scoped lang="scss">
 .register-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 400px; /* Ajusta la altura mínima según sea necesario */
+  padding: 2rem;
+  min-height: 100vh;
 }
 
 .register-form {
   background-color: #fff;
   padding: 2rem;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  width: 450px; /* Ajusta el ancho según sea necesario */
-  max-width: 95%;
+  border-radius: 1.25rem; // igual que en el modal: bordes suaves
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 450px;
+  display: grid;
+  gap: 1rem;
 }
 
 .form-title {
   text-align: center;
-  margin-bottom: 1.5rem;
   color: #333;
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
 }
 
 .form-group {
-  margin-bottom: 1.2rem;
+  display: grid;
+  gap: 0.5rem;
 }
 
 label {
-  display: block;
-  margin-bottom: 0.5rem;
-  color: #555;
-  font-weight: bold;
-  font-size: 0.9rem;
+  font-weight: 600;
+  color: #444;
+  font-size: 0.95rem;
 }
 
 .form-control {
-  width: 100%;
   padding: 0.75rem;
-  border: 1px solid #ddd;
-  border-radius: 4px;
   font-size: 1rem;
-  box-sizing: border-box; /* Importante para que el padding no aumente el ancho */
-  background-color: #b3b3b3;
-  color: #333333;
+  border: 1px solid #ccc;
+  border-radius: 0.5rem;
+  background-color: #f5f5f5;
+  color: #333;
+
+  &:focus {
+    outline: none;
+    border-color: #28a745;
+    background-color: #fff;
+  }
 }
 
 .btn-primary {
   background-color: #28a745;
   color: white;
-  padding: 0.8rem 1.5rem;
+  padding: 0.75rem;
   border: none;
-  border-radius: 4px;
-  cursor: pointer;
+  border-radius: 0.75rem;
   font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
   transition: background-color 0.3s ease;
-  width: 100%; /* Ocupar todo el ancho del contenedor */
-  display: block; /* Para que el ancho funcione correctamente */
-}
+  margin-top: 1rem;
 
-.btn-primary:hover {
-  background-color: #1e7e34;
+  &:hover {
+    background-color: #1e7e34;
+  }
 }
 </style>

@@ -148,69 +148,111 @@ onMounted(async () => {
 </template>
 <style scoped lang="scss">
 .table {
+  display: grid;
+  width: 100%;
+  gap: 0.25rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  padding: 1rem;
+
+  &-heads {
     display: grid;
-    width: fit-content;
-    gap: .125rem;
+    text-transform: capitalize;
+    background-color: #e0e0e0;
+    font-weight: 600;
+    padding: 0.5rem;
+    border-radius: 6px;
+    grid-template-columns: 18.75rem 11.25rem 11.25rem 3.125rem 3.125rem;
+    gap: 0.125rem;
+  }
 
-    &-heads {
-        display: grid;
-        text-transform: capitalize;
+  &-data {
+    display: grid;
+    gap: 0.25rem;
+  }
 
-        grid-template-columns: 18.75rem 11.25rem 11.25rem 3.125rem 3.125rem;
-        gap: .125rem;
-    }
-
-    &-data {
-        display: grid;
-        gap: .125rem;
-    }
-
-    &-row {
-        display: grid;
-        grid-template-columns: 18.75rem 11.25rem 11.25rem 3.125rem 3.125rem;
-        gap: .125rem;
-
-        >div {
-            display: -webkit-box;
-            -webkit-box-orient: vertical;
-            -webkit-line-clamp: 1;
-            overflow: hidden;
-        }
-
-        button {
-            display: grid;
-            place-items: center;
-        }
-    }
-}
-
-.paginator {
-    display: flex;
+  &-row {
+    display: grid;
+    grid-template-columns: 18.75rem 11.25rem 11.25rem 3.125rem 3.125rem;
+    gap: 0.125rem;
     align-items: center;
-    justify-content: space-between;
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 0.5rem;
 
-    &-controls {
-        display: flex;
-        align-items: center;
-        justify-content: center;
+    transition: background-color 0.2s ease;
 
-        gap: 0 .5rem;
+    &:hover {
+      background-color: #f0f0f0;
     }
 
-    input {
-        width: 6.375rem;
+    > div {
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
     }
 
     button {
-        padding: 0;
-        display: grid;
-        place-items: center;
-        background-color: transparent;
-        border: none;
+      background-color: #f5f5f5;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.2s ease, transform 0.2s ease;
+
+      &:hover {
+        background-color: #e2e8f0;
+        transform: scale(1.05);
+      }
+
+      svg {
+        stroke: #333;
+      }
     }
+  }
+}
+
+.paginator {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 1rem;
+  font-size: 0.9rem;
+
+  &-controls {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    button {
+      background-color: #ffffff;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 0.25rem 0.5rem;
+      transition: background-color 0.2s ease;
+
+      &:hover {
+        background-color: #d1d5db;
+      }
+
+      svg {
+        fill: #333;
+      }
+    }
+  }
+
+  input {
+    width: 4rem;
+    padding: 0.25rem;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    text-align: center;
+  }
 }
 
 .centered {
-    text-align: center;
+  text-align: center;
 }
+
 </style>
