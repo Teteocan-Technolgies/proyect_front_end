@@ -104,25 +104,25 @@ onMounted(async () => {
 .table {
     display: grid;
     width: fit-content;
-    gap: 2px;
+    gap: .125rem;
 
     &-heads {
         display: grid;
         text-transform: capitalize;
 
-        grid-template-columns: 200px 300px 300px;
-        gap: 2px;
+        grid-template-columns: 12.5rem 18.75rem 18.75rem;
+        gap: .125rem;
     }
 
     &-data {
         display: grid;
-        gap: 2px;
+        gap: .125rem;
     }
 
     &-row {
         display: grid;
-        grid-template-columns: 200px 300px 300px;
-        gap: 2px;
+        grid-template-columns: 12.5rem 18.75rem 18.75rem;
+        gap: .125rem;
 
         >div {
             display: -webkit-box;
@@ -148,11 +148,11 @@ onMounted(async () => {
         align-items: center;
         justify-content: center;
 
-        gap: 0 8px;
+        gap: 0 .5rem;
     }
 
     input {
-        width: 102px;
+        width: 6.375rem;
     }
 
     button {
