@@ -171,10 +171,6 @@ const submitData = async () => {
 
         const response = await ventas[ruta]({ option, item });
 
-        console.log("response")
-        console.log(response)
-
-        console.log(JSON.stringify(item))
         if (response.success) {
             emit('allFine');
             closeModal(); // Cerrar el modal automáticamente si todo está bien
