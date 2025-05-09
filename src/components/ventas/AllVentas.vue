@@ -2,6 +2,7 @@
 import { reactive, onMounted, computed, ref, watch } from 'vue';
 import { useVentasStore } from '@/stores/ventas';
 import { useUsuariosStore } from '@/stores/usuarios';
+import { useProductsStore } from '@/stores/products';
 
 import ModalGenVenta from './ModalGenVenta.vue';
 
@@ -26,6 +27,7 @@ const ventasData = computed(() => {
 })
 
 const usuarios = useUsuariosStore();
+const productos = useProductsStore();
 
 watch(() => paginadorData.currentPage,
     (newVal) => {
@@ -53,7 +55,7 @@ const openModal = () => {
 
 const getInfo = async () => {
     console.log("cargando")
-    const arr = [ventas.getAllInfoVnt('ventas'), usuarios.getAllInfoUsr('usuarios')];
+    const arr = [ventas.getAllInfoVnt('ventas'), usuarios.getAllInfoUsr('usuarios'), productos.getAllInfoPrd('productos')];
     await Promise.all(arr);
     console.log("listo")
 }
@@ -101,13 +103,13 @@ onMounted(async () => {
                     <div class="centered">
                         <p>${{ item.total }}</p>
                     </div>
-                    <button class="edit" @click="toAdded(item)">
+                    <!-- <button class="edit" @click="toAdded(item)">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                             stroke-linecap="round" stroke-linejoin="round" width="24" height="24" stroke-width="2">
                             <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4"></path>
                             <path d="M13.5 6.5l4 4"></path>
                         </svg>
-                    </button>
+                    </button> -->
                     <button class="delete" @click="deleteItem(item.venta_id)">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                             stroke-linecap="round" stroke-linejoin="round" width="24" height="24" stroke-width="2">

@@ -2,6 +2,7 @@
 import { ref, defineExpose, reactive, computed, watch } from 'vue';
 import { useVentasStore } from '@/stores/ventas';
 import { useUsuariosStore } from '@/stores/usuarios';
+import { useProductsStore } from '@/stores/products';
 
 const ModalGenVenta = ref(null);
 
@@ -9,6 +10,7 @@ const ModalGenVenta = ref(null);
 const emit = defineEmits(['allFine']);
 
 const buscador = ref(null);
+const buscadorPrd = ref(null);
 const userSelected = ref({
     nombre: null,
     apellido: null,
@@ -23,6 +25,19 @@ const ventasAdded = computed(() => ventas.added);
 const usuarios = useUsuariosStore();
 const usuariosData = computed(() => usuarios.data);
 
+const products = useProductsStore();
+const productsData = computed(() => {
+    const searchValuePrd = buscadorPrd.value?.toLowerCase().trim();
+    if (!searchValuePrd) return []; const deleteOnProduct = (index) => {
+        dataToSend.productos.splice(index, 1);
+    }
+    // console.log(products.data)
+
+    return products.data.filter(item =>
+        item.nombre?.toLowerCase().includes(searchValuePrd)
+    ).slice(0, 5);
+});
+
 const usuariosDataBuscador = computed(() => {
     const searchValue = buscador.value?.toLowerCase().trim();
     if (!searchValue) return [];
@@ -34,6 +49,16 @@ const usuariosDataBuscador = computed(() => {
     ).slice(0, 5);
 })
 
+const addProduct = (product) => {
+    const existingProduct = dataToSend.productos.find(
+        p => p.nombre === product.nombre
+    );
+
+    if (!existingProduct) {
+        dataToSend.productos.push({ ...product, cantidad: 1 });
+    }
+    buscadorPrd.value = '';
+};
 
 const dataToSend = reactive({
     venta_id: null,
@@ -41,7 +66,13 @@ const dataToSend = reactive({
     fecha: null,
     total: null,
     cantidad_art: null,
+    productos: [
+
+    ],
 });
+
+const deleteOnProduct = (index) => dataToSend.productos.splice(index, 1);
+
 
 // Rellenar el formulario automáticamente si hay un producto seleccionado
 watch(ventasAdded, (newProduct) => {
@@ -57,6 +88,22 @@ watch(ventasAdded, (newProduct) => {
         resetForm();
     }
 });
+
+watch(
+    () => dataToSend.productos,
+    () => {
+        dataToSend.total = dataToSend.productos.reduce(
+            (acc, producto) => acc + producto.precio * producto.cantidad,
+            0
+        );
+        dataToSend.cantidad_art = dataToSend.productos.reduce(
+            (acc, producto) => acc + producto.cantidad,
+            0
+        );
+    },
+    { deep: true }
+);
+
 
 // Métodos del modal
 const openModal = () => {
@@ -93,6 +140,7 @@ const resetForm = () => {
     dataToSend.fecha = null;
     dataToSend.total = null;
     dataToSend.cantidad_art = null;
+    dataToSend.productos = [];
 };
 
 // Detectar clic fuera del modal
@@ -120,8 +168,13 @@ const submitData = async () => {
         const ruta = item.venta_id ? 'editItemVnt' : 'addItemVnt';
 
         const option = item.venta_id ? `ventas/${item.venta_id}` : 'ventas'
+
         const response = await ventas[ruta]({ option, item });
 
+        console.log("response")
+        console.log(response)
+
+        console.log(JSON.stringify(item))
         if (response.success) {
             emit('allFine');
             closeModal(); // Cerrar el modal automáticamente si todo está bien
@@ -139,7 +192,7 @@ defineExpose({
 });
 
 </script>
-
+<!-- UserSearch.vue -->
 <template>
     <dialog ref="ModalGenVenta">
         <div class="container-modal">
@@ -161,19 +214,48 @@ defineExpose({
             </div>
 
             <h4>Usuario seleccionado: {{ userSelected.nombre }} {{ userSelected.apellido }}</h4>
+
             <div>
                 <label for="fecha">Fecha</label>
                 <input type="date" id="fecha" v-model="dataToSend.fecha">
             </div>
 
             <div>
+                <label for="searcher">Buscador de productos</label>
+                <input type="text" v-model="buscadorPrd" id="searcher"
+                    placeholder="Buscar por nombre, correo o apellido">
+
+                <div class="height-ancor" v-if="buscadorPrd && buscadorPrd.length > 0">
+                    <div class="button-list">
+                        <button v-for="(item, index) in productsData" :key="index" @click="addProduct(item)">
+                            {{ item.nombre }}
+                        </button>
+                    </div>
+                </div>
+
+                <div class="productWrapper" v-for="(item, index) in dataToSend.productos" :key="index">
+                    <p>{{ item.nombre }}</p>
+                    <input type="number" placeholder="Cantidad" v-model.number="item.cantidad" min="1">
+                    <p>${{ item.precio }}</p>
+                    <p v-if="item.cantidad > 0">${{ (item.cantidad * Number(item.precio)).toFixed(2) }}</p>
+                    <button @click="deleteOnProduct(index)">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-linecap="round" stroke-linejoin="round" width="24" height="24" stroke-width="2">
+                            <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"></path>
+                            <path d="M9 12l6 0"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <div>
                 <label for="number">Total</label>
-                <input type="number" id="number" v-model="dataToSend.total">
+                <input type="number" id="number" v-model="dataToSend.total" disabled>
             </div>
 
             <div>
                 <label for="stock">Cantidad</label>
-                <input type="number" id="stock" v-model="dataToSend.cantidad_art">
+                <input type="number" id="stock" v-model="dataToSend.cantidad_art" disabled>
             </div>
 
             <button @click="submitData">Guardar</button>
@@ -183,38 +265,91 @@ defineExpose({
 <style scoped lang="scss">
 dialog {
     margin: auto;
+    width: min(100%, 400px);
 }
 
 .container-modal {
-    min-width: 18.75rem;
+    display: grid;
 
-    >div {
+    div {
         display: grid;
     }
 }
 
-textarea {
-    resize: none;
+.user-search-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    max-width: 400px;
+    margin: auto;
+    padding: 1rem;
+}
+
+.search-label {
+    font-weight: bold;
+    font-size: 0.95rem;
+    color: #333;
+}
+
+.search-input {
+    padding: 0.5rem 0.75rem;
+    border: 1px solid #ccc;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: border-color 0.3s;
+}
+
+.search-input:focus {
+    border-color: #007BFF;
+    outline: none;
 }
 
 .height-ancor {
     height: .9375rem;
+    z-index: 3;
 }
 
 .button-list {
     display: grid;
     grid-template-rows: 0fr;
     overflow: hidden;
-
     transition: grid-template-rows 0.3s ease;
+    height: fit-content;
+}
 
-    div {
-        display: grid;
-        z-index: 3;
-    }
+.button-list div {
+    display: grid;
+    gap: 0.5rem;
+    padding-top: 0.5rem;
+    background-color: #181818;
 }
 
 .button-list.active {
     grid-template-rows: 1fr;
+}
+
+.user-button {
+    padding: 0.5rem 1rem;
+    background-color: #f0f0f0;
+    border: 1px solid #ddd;
+    border-radius: 0.4rem;
+    text-align: left;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.user-button:hover {
+    background-color: #e0e0e0;
+}
+
+.productWrapper {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+
+    p:first-of-type {
+        grid-column: 1 / -1;
+    }
 }
 </style>
