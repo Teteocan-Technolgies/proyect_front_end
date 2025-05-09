@@ -23,6 +23,7 @@ export const router = createRouter({
         }
       ],
     },
+
     {
       path: "/inicio",
       name: 'inicio',
@@ -31,7 +32,7 @@ export const router = createRouter({
         {
           path: '/inicio/productos',
           name: 'productos',
-          component: () => import("@/components/productos/allProducts.vue")
+          component: () => import("@/components/productos/AllProducts.vue")
         },
         {
           path: '/inicio/ventas',
