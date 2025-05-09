@@ -144,7 +144,7 @@ defineExpose({
     <dialog ref="ModalGenVenta">
         <div class="container-modal">
             <div>
-                <label for="searcher">Buscador</label>
+                <label for="searcher">Buscador de usuarios</label>
                 <input type="text" v-model="buscador" id="searcher" placeholder="Buscar por nombre, correo o apellido">
                 <div class="height-ancor">
                     <div class="button-list" :class="{ 'active': buscador && buscador.length > 0 }">
@@ -162,13 +162,15 @@ defineExpose({
 
             <h4>Usuario seleccionado: {{ userSelected.nombre }} {{ userSelected.apellido }}</h4>
             <div>
-                <label for="number">Total</label>
-                <input type="number" id="number" v-model="dataToSend.total">
-            </div>
-            <div>
                 <label for="fecha">Fecha</label>
                 <input type="date" id="fecha" v-model="dataToSend.fecha">
             </div>
+
+            <div>
+                <label for="number">Total</label>
+                <input type="number" id="number" v-model="dataToSend.total">
+            </div>
+
             <div>
                 <label for="stock">Cantidad</label>
                 <input type="number" id="stock" v-model="dataToSend.cantidad_art">

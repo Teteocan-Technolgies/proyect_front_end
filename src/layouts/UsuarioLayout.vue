@@ -1,12 +1,14 @@
 <script setup>
 import UserHeader from '@/components/usuario/UserHeader.vue'
 import UserSidemenu from '@/components/usuario/UserSidemenu.vue';
+import chatbot from '@/components/chatbot/chatbot.vue';
 </script>
 <template>
   <div class="container">
     <UserHeader class="header" />
     <UserSidemenu class="aside" />
     <router-view class="content" />
+    <chatbot />
   </div>
 </template>
 <style scoped lang="scss">
@@ -14,6 +16,7 @@ import UserSidemenu from '@/components/usuario/UserSidemenu.vue';
   min-height: 100vh;
   display: grid;
   grid-template-rows: auto 1fr;
+  position: relative;
   grid-template-areas:
     "header header"
     "aside content";
